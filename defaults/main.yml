@@ -1,5 +1,5 @@
 ---
-apache_mirror: http://apache.mirrors.tds.net
+apache_mirror: http://mirrors.advancedhosters.com/apache
 storm_java_install: true
 nimbus_thrift_port: 6627
 storm_drpc_extra_config:
@@ -34,7 +34,7 @@ storm_zookeeper_extra_config:
     storm.zookeeper.retry.times: 29
     storm.zookeeper.root: "/storm"
     storm.zookeeper.session.timeout: 30000
-download_tmp_dir: /root
+download_tmp_dir: /tmp
 storm_tarball_name: apache-storm-{{storm_version}}.tar.gz
 
 monasca_log_level: WARN
