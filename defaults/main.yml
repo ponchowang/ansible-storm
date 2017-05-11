@@ -1,5 +1,6 @@
 ---
 apache_mirror: http://apache.mirrors.tds.net
+storm_java_install: true
 nimbus_thrift_port: 6627
 storm_drpc_extra_config:
 storm_local_dir: /var/storm
