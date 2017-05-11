@@ -42,3 +42,4 @@ monasca_wait_for_period: 60
 run_mode: Deploy
 skip_install: False
 verify: True
+update_java: false
