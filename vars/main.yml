@@ -17,9 +17,9 @@ logviewer_upstart_conf: /etc/init/storm-logviewer.conf
 nimbus_sysd_script: "/etc/systemd/system/storm-nimbus.service"
 nimbus_init_script: "/etc/init.d/storm-nimbus"
 
-supervisor_sysd_script: "/etc/systemd/systemd/system/storm-supervisor.service"
+supervisor_sysd_script: "/etc/systemd/system/storm-supervisor.service"
 supervisor_init_script: "/etc/init.d/storm-supervisor"
 
-ui_sysd_script: "/etc/systemd/systemd/system/storm-ui.service"
+ui_sysd_script: "/etc/systemd/system/storm-ui.service"
 ui_init_script: "/etc/init.d/storm-ui"
 
