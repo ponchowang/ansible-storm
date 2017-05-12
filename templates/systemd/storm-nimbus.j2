@@ -1,0 +1,19 @@
+[Unit]
+Description=Storm Nimbus daemon
+Documentation=http://storm.apache.org/
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Environment=STORM_HOME={{storm_home}}
+WorkingDirectory={{storm_home}}
+User={{storm_user}}
+Group={{storm_group}}
+
+ExecStart={{storm_home}}/bin/storm nimbus
+
+StandardOutput=journal
+StandardError=inherit
+
+[Install]
+WantedBy=multi-user.target

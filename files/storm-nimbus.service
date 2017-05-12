@@ -1,6 +1,5 @@
 [Unit]
 Description=Storm Nimbus daemon
-After=zookeeper.service
 
 [Service]
 Type=simple

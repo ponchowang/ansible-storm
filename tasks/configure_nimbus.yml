@@ -5,29 +5,45 @@
     - Restart Nimbus
     - Restart UI
 
-- name: Setup Storm nimbus upstart script
-  copy: dest={{nimbus_upstart_conf}} owner=root group=root mode=644 src=storm-nimbus.conf
-  notify:
+#Copy the instance specific init file
+- name: Copy Debian Init File for Storm Nimbus
+  template: src=init/debian/storm-nimbus.j2 dest={{instance_init_script}} mode=0755 force=yes
+  when: ansible_os_family == 'Debian' and not use_systemd
+  notify: 
     - Restart Nimbus
-  when: not use_systemd
 
-- name: Setup Storm nimbus systemd script
-  copy: dest={{nimbus_systemd_service}} owner=root group=root mode=644 src=storm-nimbus.service
-  notify:
+#Copy the instance specific init file
+- name: Copy Redhat Init File for Storm Nimbus
+  template: src=init/redhat/storm-nimbus.j2 dest={{instance_init_script}} mode=0755 force=yes
+  when: ansible_os_family == 'RedHat' and not use_systemd
+  notify: 
     - Restart Nimbus
+
+#Copy the systemd specific file if systemd is installed
+- name: Copy Systemd File for Storm Nimbus
+  template: src=systemd/storm-nimbus.j2 dest={{instance_sysd_script}} mode=0644 force=yes
   when: use_systemd
-
-- name: Setup Storm UI upstart script
-  copy: dest={{stormui_upstart_conf}} owner=root group=root mode=644 src=storm-ui.conf
   notify:
-    - Restart UI
-  when: storm_ui_enabled and not use_systemd
+  - reload systemd configuration
+  - Restart Nimbus
 
-- name: Setup Storm UI systemd script
-  copy: dest={{stormui_systemd_service}} owner=root group=root mode=644 src=storm-ui.service
+- name: Copy Debian Init File for Storm UI
+  template: src=init/debian/storm-ui.j2 dest={{instance_init_script}} mode=0755 force=yes
+  when: ansible_os_family == 'Debian' and storm_ui_enabled and not use_systemd
+  notify: 
+    - Restart UI
+
+#Copy the instance specific init file
+- name: Copy Redhat Init File for Storm UI
+  template: src=init/redhat/storm-ui.j2 dest={{instance_init_script}} mode=0755 force=yes
+  when: ansible_os_family == 'RedHat' and storm_ui_enabled and not use_systemd
+  notify: 
+    - Restart UI
+
+#Copy the systemd specific file if systemd is installed
+- name: Copy Systemd File for Storm UI
+  template: src=systemd/storm-ui.j2 dest={{instance_sysd_script}} mode=0644 force=yes
+  when: use_systemd and storm_ui_enabled
   notify:
-    - Restart UI
-  when: storm_ui_enabled and use_systemd
-
-- command: systemctl daemon-reload
-  when: use_systemd
+  - reload systemd configuration
+  - Restart UI
