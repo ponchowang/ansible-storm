@@ -7,42 +7,42 @@
 
 #Copy the instance specific init file
 - name: Copy Debian Init File for Storm Nimbus
-  template: src=init/debian/storm-nimbus.j2 dest={{instance_init_script}} mode=0755 force=yes
+  template: src=init/debian/storm-nimbus.j2 dest={{nimbus_init_script}} mode=0755 force=yes
   when: ansible_os_family == 'Debian' and not use_systemd
   notify: 
     - Restart Nimbus
 
 #Copy the instance specific init file
 - name: Copy Redhat Init File for Storm Nimbus
-  template: src=init/redhat/storm-nimbus.j2 dest={{instance_init_script}} mode=0755 force=yes
+  template: src=init/redhat/storm-nimbus.j2 dest={{nimbus_init_script}} mode=0755 force=yes
   when: ansible_os_family == 'RedHat' and not use_systemd
   notify: 
     - Restart Nimbus
 
 #Copy the systemd specific file if systemd is installed
 - name: Copy Systemd File for Storm Nimbus
-  template: src=systemd/storm-nimbus.j2 dest={{instance_sysd_script}} mode=0644 force=yes
+  template: src=systemd/storm-nimbus.j2 dest={{nimbus_sysd_script}} mode=0644 force=yes
   when: use_systemd
   notify:
   - reload systemd configuration
   - Restart Nimbus
 
 - name: Copy Debian Init File for Storm UI
-  template: src=init/debian/storm-ui.j2 dest={{instance_init_script}} mode=0755 force=yes
+  template: src=init/debian/storm-ui.j2 dest={{ui_init_script}} mode=0755 force=yes
   when: ansible_os_family == 'Debian' and storm_ui_enabled and not use_systemd
   notify: 
     - Restart UI
 
 #Copy the instance specific init file
 - name: Copy Redhat Init File for Storm UI
-  template: src=init/redhat/storm-ui.j2 dest={{instance_init_script}} mode=0755 force=yes
+  template: src=init/redhat/storm-ui.j2 dest={{ui_init_script}} mode=0755 force=yes
   when: ansible_os_family == 'RedHat' and storm_ui_enabled and not use_systemd
   notify: 
     - Restart UI
 
 #Copy the systemd specific file if systemd is installed
 - name: Copy Systemd File for Storm UI
-  template: src=systemd/storm-ui.j2 dest={{instance_sysd_script}} mode=0644 force=yes
+  template: src=systemd/storm-ui.j2 dest={{ui_sysd_script}} mode=0644 force=yes
   when: use_systemd and storm_ui_enabled
   notify:
   - reload systemd configuration

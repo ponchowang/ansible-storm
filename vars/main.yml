@@ -1,12 +1,25 @@
 ---
 nimbus_systemd_service: /etc/systemd/system/storm-nimbus.service
 nimbus_upstart_conf: /etc/init/storm-nimbus.conf
-storm_root_dir: /opt/storm
-storm_group: storm
+
 stormui_systemd_service: /etc/systemd/system/storm-ui.service
 stormui_upstart_conf: /etc/init/storm-ui.conf
+
 supervisor_systemd_service: /etc/systemd/system/storm-supervisor.service
 supervisor_upstart_conf: /etc/init/storm-supervisor.conf
+
+storm_root_dir: /opt/storm
+storm_group: storm
+storm_user: storm
 logviewer_systemd_service: /etc/systemd/system/storm-logviewer.service
 logviewer_upstart_conf: /etc/init/storm-logviewer.conf
-storm_user: storm
+
+nimbus_sysd_script: "/usr/lib/systemd/system/storm-nimbus.service"
+nimbus_init_script: "/etc/init.d/storm-nimbus"
+
+supervisor_sysd_script: "/usr/lib/systemd/system/storm-supervisor.service"
+supervisor_init_script: "/etc/init.d/storm-supervisor"
+
+ui_sysd_script: "/usr/lib/systemd/system/storm-ui.service"
+ui_init_script: "/etc/init.d/storm-ui"
+

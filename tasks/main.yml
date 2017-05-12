@@ -4,11 +4,6 @@
   tags:
       - always
 
-- name: check-set-parameters
-  include: storm-parameters.yml
-  tags:
-      - always
-
 - include: java.yml
   when: storm_java_install
   tags:
