@@ -4,29 +4,24 @@
   notify:
     - Restart Supervisor
 
-- name: Setup Storm supervisor upstart script
-  copy: dest={{supervisor_upstart_conf}} owner=root group=root mode=644 src=storm-supervisor.conf
-  notify:
+#Copy the instance specific init file
+- name: Copy Debian Init File for Storm Supervisor
+  template: src=init/debian/storm-supervisor.j2 dest={{instance_init_script}} mode=0755 force=yes
+  when: ansible_os_family == 'Debian' and not use_systemd
+  notify: 
     - Restart Supervisor
-  when: not use_systemd
 
-- name: Setup Storm supervisor systemd script
-  copy: dest={{supervisor_systemd_service}} owner=root group=root mode=644 src=storm-supervisor.service
-  notify:
+#Copy the instance specific init file
+- name: Copy Redhat Init File for Storm Supervisor
+  template: src=init/redhat/storm-supervisor.j2 dest={{instance_init_script}} mode=0755 force=yes
+  when: ansible_os_family == 'RedHat' and not use_systemd
+  notify: 
     - Restart Supervisor
+
+#Copy the systemd specific file if systemd is installed
+- name: Copy Systemd File for Storm Supervisor
+  template: src=systemd/storm-supervisor.j2 dest={{instance_sysd_script}} mode=0644 force=yes
   when: use_systemd
-
-- name: Setup Storm Logviewer upstart script
-  copy: dest={{logviewer_upstart_conf}} owner=root group=root mode=644 src=storm-logviewer.conf
   notify:
-    - Restart Logviewer
-  when: storm_logviewer_enabled and not use_systemd
-
-- name: Setup Storm Logviewer systemd script
-  copy: dest={{logviewer_systemd_service}} owner=root group=root mode=644 src=storm-logviewer.service
-  notify:
-    - Restart Logviewer
-  when: storm_logviewer_enabled and use_systemd
-
-- command: systemctl daemon-reload
-  when: use_systemd
+  - reload systemd configuration
+  - Restart Supervisor
