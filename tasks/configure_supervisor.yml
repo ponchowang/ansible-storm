@@ -6,21 +6,21 @@
 
 #Copy the instance specific init file
 - name: Copy Debian Init File for Storm Supervisor
-  template: src=init/debian/storm-supervisor.j2 dest={{supervisor_instance_init_script}} mode=0755 force=yes
+  template: src=init/debian/storm-supervisor.j2 dest={{supervisor_init_script}} mode=0755 force=yes
   when: ansible_os_family == 'Debian' and not use_systemd
   notify: 
     - Restart Supervisor
 
 #Copy the instance specific init file
 - name: Copy Redhat Init File for Storm Supervisor
-  template: src=init/redhat/storm-supervisor.j2 dest={{supervisor_instance_init_script}} mode=0755 force=yes
+  template: src=init/redhat/storm-supervisor.j2 dest={{supervisor_init_script}} mode=0755 force=yes
   when: ansible_os_family == 'RedHat' and not use_systemd
   notify: 
     - Restart Supervisor
 
 #Copy the systemd specific file if systemd is installed
 - name: Copy Systemd File for Storm Supervisor
-  template: src=systemd/storm-supervisor.j2 dest={{supervisor_instance_sysd_script}} mode=0644 force=yes
+  template: src=systemd/storm-supervisor.j2 dest={{supervisor_sysd_script}} mode=0644 force=yes
   when: use_systemd
   notify:
   - reload systemd configuration
