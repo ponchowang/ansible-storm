@@ -1,4 +1,4 @@
 ---
 java: "{{ es_java | default('java-1.8.0-openjdk.x86_64') }}"
 default_file: "/etc/sysconfig/storm"
-storm_home: "/usr/share/storm"
+storm_home: "{{storm_root_dir}}/current"
