@@ -8,7 +8,7 @@ stormui_upstart_conf: /etc/init/storm-ui.conf
 supervisor_systemd_service: /etc/systemd/system/storm-supervisor.service
 supervisor_upstart_conf: /etc/init/storm-supervisor.conf
 
-storm_root_dir: /opt/storm
+storm_root_dir: /usr/share/storm
 storm_group: storm
 storm_user: storm
 logviewer_systemd_service: /etc/systemd/system/storm-logviewer.service
